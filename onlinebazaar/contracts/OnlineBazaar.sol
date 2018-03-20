@@ -14,6 +14,7 @@ contract OnlineBazaar{
   //state variables
   mapping (uint => Article) public articles;
   uint articleCounter;
+  address owner;
 
 
   // Events
@@ -33,6 +34,19 @@ contract OnlineBazaar{
     string _name,
     uint256 _price
   );
+
+  //modifiers
+  modifier onlyOwner(){
+    require(msg.sender == owner);
+    _;// it's placeholder that represents the code of the function that the modifier is applied to
+  }
+
+
+  // constructor
+  //this contract will be called only once when the contract is deployed
+  function OnlineBazaar() public{
+    owner = msg.sender;
+  }
 
   // sell an article
 
@@ -135,4 +149,17 @@ contract OnlineBazaar{
     LogBuyArticle(_id, article.seller,article.buyer,article.name, article.price);
 
   }
+
+  //Sefl destruct function against contract
+  // it's very delicate part of the contract and needs to be taken care of by contract owner only
+  // deactive the contract
+  function kill() public onlyOwner{
+    //make sure that only owner can destruct the contract
+    //require(msg.sender == owner);
+
+    //during destruction owner will be refund all remaning funds in the contract
+    selfdestruct(owner);
+  }
+
+
 }
