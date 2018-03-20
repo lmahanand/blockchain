@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import "./ParentContract.sol"
+import "./ParentContract.sol";
 
 contract OnlineBazaar is ParentContract{
 
