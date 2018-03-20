@@ -1,6 +1,8 @@
 pragma solidity ^0.4.18;
 
-contract OnlineBazaar{
+import "./ParentContract.sol"
+
+contract OnlineBazaar is ParentContract{
 
   struct Article{
     uint id;
@@ -14,7 +16,6 @@ contract OnlineBazaar{
   //state variables
   mapping (uint => Article) public articles;
   uint articleCounter;
-  address owner;
 
 
   // Events
@@ -34,19 +35,6 @@ contract OnlineBazaar{
     string _name,
     uint256 _price
   );
-
-  //modifiers
-  modifier onlyOwner(){
-    require(msg.sender == owner);
-    _;// it's placeholder that represents the code of the function that the modifier is applied to
-  }
-
-
-  // constructor
-  //this contract will be called only once when the contract is deployed
-  function OnlineBazaar() public{
-    owner = msg.sender;
-  }
 
   // sell an article
 
